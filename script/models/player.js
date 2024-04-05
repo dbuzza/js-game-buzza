@@ -31,7 +31,7 @@ class Player extends Hitbox {
 
         this.velocity = new Vector2D();
         this.velocity.set(0, 0);
-        this.hp304 = 104;
+        this.hp304 = 100;
         this.score = 0;
         this.moving = false;
         this.update_timer = new Clock(125);
@@ -66,7 +66,12 @@ class Player extends Hitbox {
                 175, 175);
             ctx.font = "30px Verdana";
             ctx.fillStyle = "white";
-            ctx.fillText(this.name, this.position.x + 50, (ctx.canvas.clientHeight - (this.position.y + 5)));
+            this.life="";
+            for(let i=0;i<this.hp304;i+=10){
+                this.life+="*";
+            }
+            ctx.fillText(this.name, this.position.x + 50, (ctx.canvas.clientHeight - (this.position.y + 35)));
+            ctx.fillText(this.life, this.position.x - 10, (ctx.canvas.clientHeight - (this.position.y + 5)))
             this.bullets.forEach((b) => b.draw(ctx));
 
             super.draw(ctx);
