@@ -14,9 +14,10 @@ class Player extends Hitbox {
     images;
     moving;
     update_timer;
+    bSparati
 
     constructor(images_srcs, name) {
-        super(50, conf.GROUND_Y,165,175)
+        super(50, conf.GROUND_Y,165,175);
         this.name = name;
         // importo le immagini dello sprite_sheet nel vettore di immagini
         this.images = [];
@@ -43,7 +44,7 @@ class Player extends Hitbox {
             this.velocity.y = 32;
             //this.velocity.x = 10;
         }
-        //  TODO: Fix double jump based on whatever ground collision
+        //TODO: Fix double jump based on whatever ground collision
         // Not only ground
         if(this.position.y > conf.GROUND_Y) {
             this.canJump = false;
@@ -55,21 +56,23 @@ class Player extends Hitbox {
         console.log("y: " + this.position.y);
 
         let fireball = new Fireball(this.position.x + 75, this.position.y - 50);
-        this.bullets.push(fireball);
+        this.bSparati=this.bullets.push(fireball);
     }
 
     draw(ctx) {
-        ctx.drawImage(this.images[this.currentImageIndex], this.position.x, 
-            ctx.canvas.clientHeight - this.position.y, 
-            175, 175);
-        ctx.font = "30px Verdana";
-        ctx.fillStyle = "white";
-        ctx.fillText(this.name, this.position.x + 50, (ctx.canvas.clientHeight - (this.position.y + 5)));
-        this.bullets.forEach((b) => b.draw(ctx));
+        if(this.hp304>0){
+            ctx.drawImage(this.images[this.currentImageIndex], this.position.x, 
+                ctx.canvas.clientHeight - this.position.y, 
+                175, 175);
+            ctx.font = "30px Verdana";
+            ctx.fillStyle = "white";
+            ctx.fillText(this.name, this.position.x + 50, (ctx.canvas.clientHeight - (this.position.y + 5)));
+            this.bullets.forEach((b) => b.draw(ctx));
 
-        super.draw(ctx);
-        
+            super.draw(ctx);
+        }
     }
+
 
     update() {
         this.position.add(this.velocity);
@@ -93,6 +96,8 @@ class Player extends Hitbox {
         }
 
         this.bullets.forEach((b) => b.update());
+        //if(this.bSparati!=null)
+        //    this.bullets[this.bSparati-1].collideCon(this);
     }
 }
 

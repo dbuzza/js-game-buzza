@@ -87,6 +87,10 @@ class Game {
         };
         this.player.update();
         this.fireball.update();
+
+        this.player.bullets.forEach((b) => b.collideCon(this.enemy));
+        //if(this.player.bSparati!=null&&this.player.hp304>=0&&this.enemy.hp304>=0)
+        //    this.player.bullets[this.player.bSparati-1].collideCon(this.enemy);
     }
 
     playBgMusic() {

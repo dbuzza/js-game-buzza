@@ -11,11 +11,13 @@ class Sprite extends Hitbox {
     maxSpriteX;
     maxSpriteY;
     velocity;
+    colliso;
 
     constructor(spriteSheetSrc, square_width, square_height, nImagesX, nImagesY, 
         width, height, spawnX, spawnY) {
             super(spawnX, spawnY, width,height)
         this.image = new Image();
+        this.colliso=false;
         this.image.src = spriteSheetSrc;
         this.spriteWidth = square_width;
         this.spriteHeight = square_height;
@@ -34,22 +36,35 @@ class Sprite extends Hitbox {
     }
     // Yapdate
     update() {
-        this.clock.update();
-        this.position.add(this.velocity);
-        if(this.clock.tick()) {
-            if(this.spriteX == this.maxSpriteX) {
-                this.spriteY = (this.spriteY + 1) % this.maxSpriteY;
+        if(!this.colliso){
+            this.clock.update();
+            this.position.add(this.velocity);
+            if(this.clock.tick()) {
+                if(this.spriteX == this.maxSpriteX) {
+                    this.spriteY = (this.spriteY + 1) % this.maxSpriteY;
+                }
+                this.spriteX = (this.spriteX + 1) % this.maxSpriteX;
             }
-            this.spriteX = (this.spriteX + 1) % this.maxSpriteX;
+        }
+
+        
+    }
+    collideCon(other){
+        if(this.collision(other)&&this.colliso==false&&other.hp304>0){
+            other.hp304-=10;
+            this.colliso=true;
+            console.log(other.hp304);
         }
     }
     // Sprais
     draw(ctx) {
-        ctx.drawImage(this.image, this.spriteX * this.spriteWidth,
-            this.spriteY * this.spriteHeight, 
-            this.spriteWidth, this.spriteHeight, this.position.x,
-            ctx.canvas.clientHeight - this.position.y, this.width, this.height);
-            super.draw(ctx);
+        if(!this.colliso){
+            ctx.drawImage(this.image, this.spriteX * this.spriteWidth,
+                this.spriteY * this.spriteHeight, 
+                this.spriteWidth, this.spriteHeight, this.position.x,
+                ctx.canvas.clientHeight - this.position.y, this.width, this.height);
+                super.draw(ctx);
+        }
     }
 
 }
