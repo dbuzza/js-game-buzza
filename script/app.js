@@ -2,8 +2,11 @@ import Game from './logic/game.js';
 import conf from './config.js';
 
 let canvas = document.getElementById('board');
+let playerNick;
+do {
+    playerNick = window.prompt("Inserisci NOME: ");
+} while (playerNick==""||playerNick==null);
 
-let playerNick = window.prompt("Inserisci NOME: ");
 
 let g = new Game(canvas, conf, playerNick);
 
