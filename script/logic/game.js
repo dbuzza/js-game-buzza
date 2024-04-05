@@ -2,6 +2,7 @@ import Player from "../models/player.js";
 import Sound from "../models/sound.js";
 import Sprite from "../models/sprite.js";
 import Hitbox from "../models/hitbox.js";
+import conf from "../config.js";
 
 class Game {
     playerNickname;
@@ -26,6 +27,7 @@ class Game {
         this.obstacle = new Hitbox(550, 200, 100, 200);
         this.bgMusic = new Sound("assets/audio/background.mp3");
         this.enemy=new Player(this.config.PLAYER_SRC,"gigi");
+        this.enemy.position.set(700,conf.GROUND_Y+20);
     }
 
     keyboardPressedHandler(key) {
@@ -101,6 +103,7 @@ class Game {
         this.fireball.draw(this.ctx);
         this.ground.draw(this.ctx);
         this.obstacle.draw(this.ctx);
+        this.enemy.draw(this.ctx);
         
     }
 
